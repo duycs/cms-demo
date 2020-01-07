@@ -55,7 +55,7 @@ object_name is one instance of many objects, so we have *objects* table with pro
 filed_name is one instance of many fileds, so we have *fields* table with properties field_type, access_modifier, field_value.
 
 #### A sample schema for this idea
-- you can see *cms.sql* at this project folder, you use this file to generate your local database.
+- You can see *cms.sql* at this project folder, you use this file to generate your local database.
 - Or, I have created a schema template for this idea, you can use MySQL Workbench to connect with this connection infomation:
 *Server=mysql-6037-0.cloudclusters.net;port=10001;Database=cms;user=admin;password=abc@1234;*
 
@@ -65,7 +65,7 @@ filed_name is one instance of many fileds, so we have *fields* table with proper
 - This is an approach to create *Entity data model*, it creates model codes (classes, properties, DbContext etc.) from the *existing database* in the project.
 
 ---
-## Now after have a existing database, we will use database first approach
+## Now after have an existing database, we will use database first approach
 ### Setup your local development
 - Net core 2.2
 - Visual studio code
