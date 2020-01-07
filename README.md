@@ -1,7 +1,7 @@
 # cms-demo
 a simple Content management system with Database first
 
-### Keywords: 
+### Keywords
 - ASP.NET Core
 - Content management system (CMS)
 - Database first
@@ -14,7 +14,7 @@ a simple Content management system with Database first
 - A content management system (CMS) is a software application that can be used to manage the creation and modification of digital content.
 - A content management system (CMS) typically has two major components: a content management application (CMA), as the front-end user interface that allows a user, even with limited expertise, to add, modify, and remove content from a website without the intervention of a webmaster; and a content delivery application (CDA), that compiles the content and updates the website.
 
-### My idea to build a structure CMS
+### I have an idea to create a structure CMS
 #### If you a developer, you know about Object-oriented programming
 - Object-oriented programming: is a programming paradigm based on the concept of "objects", which can contain data, in the form of fields (often known as attributes or properties), and code, in the form of procedures (often known as methods).
 
