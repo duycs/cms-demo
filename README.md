@@ -121,6 +121,13 @@ dotnet ef dbcontext scaffold "Server=mysql-6037-0.cloudclusters.net;port=10001;D
 
 5. Next tutorial, we will add some layer and code to use this CmsContext to working with data
 
+### You can fork/clone this demo to run at your local
+1. foke/clone this project
+2. At the folder, open Command/Terminal then run this command to run it:
+```
+dotnet run
+```
+
 ---
 ## Referecnces:
 https://dev.mysql.com/doc/connector-net/en/connector-net-entityframework-core-scaffold-example.html
