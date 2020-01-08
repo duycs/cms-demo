@@ -12,10 +12,11 @@ namespace cms_demo.Controllers
     public class CmsController : ControllerBase
     {
 
+        #region Objects
         private CmsContext context = new CmsContext();
         // GET api/values
         [HttpGet("objects")]
-        public ActionResult<IEnumerable<string>> Get()
+        public ActionResult Get()
         {
             var objects = context.Objects.ToList();
             //var objects = string.Empty;
@@ -28,9 +29,9 @@ namespace cms_demo.Controllers
 
         // GET api/values/5
         [HttpGet("objects/{id}")]
-        public ActionResult<string> Get(int id)
+        public ActionResult Get(int id)
         {
-            return "value";
+            return NoContent();
         }
 
         // POST api/values
@@ -49,6 +50,35 @@ namespace cms_demo.Controllers
         [HttpDelete("objects/{id}")]
         public void Delete(int id)
         {
+        }
+
+        #endregion Objects
+
+        [HttpGet("object-fields/{objectId}")]
+        public ActionResult GetObjectFields(int objectId)
+        {
+            var objectFields = context.ObjectFileds.ToList();
+            var obj = context.Objects.Where(w => w.Id == objectId.ToString()).FirstOrDefault();
+
+            if(!objectFields.Any())
+                return NoContent();
+
+            var fields = new List<Fields>();
+            foreach(var objectField in objectFields){
+                var field = context.Fields.Where(w=>w.Id == objectField.FieldId).FirstOrDefault();
+                fields.Add(field);
+            }
+            var ObjectFieldDto = new ObjectFieldDto{
+                Object = obj,
+                Fields = fields
+            };
+
+            return Ok(ObjectFieldDto);
+        }
+
+        public class ObjectFieldDto {
+            public Objects Object {get;set;}
+            public List<Fields> Fields {get;set;}
         }
     }
 }
