@@ -42,7 +42,7 @@ access_modifier object_type object_name {
 
 - From example about *Class object* above, assumption all keyword as tables is single without relation:
 ```
-access_modifier
+access_modifier (permission table)
 object_type
 object_name
 field_type
@@ -50,9 +50,10 @@ filed_name
 field_value
 ```
 
-- After think about relation, we should have two relation tables:
-object_name is one instance of many objects, so we have *objects* table with properties: object_type, access_modifier, filed.
-filed_name is one instance of many fileds, so we have *fields* table with properties field_type, access_modifier, field_value.
+- After think about relation, we should have relation tables:
+object_name is one instance of many objects, so we have *objects* table with properties: object_type, permission_id, filed_id.
+filed_name is one instance of many fileds, so we have *fields* table with properties field_type, permission_id, field_value.
+One object have many fields, so we have *object_fileds* table with properties: object_id, field_id.
 
 #### A sample schema for this idea
 - You can see *cms.sql* at this project folder, you use this file to generate your local database.
@@ -111,6 +112,8 @@ dotnet ef dbcontext scaffold [ConnectionString] MySql.Data.EntityFrameworkCore -
 ```
 dotnet ef dbcontext scaffold "Server=mysql-6037-0.cloudclusters.net;port=10001;Database=cms;user=admin;password=abc@1234;CharSet=utf8;" MySql.Data.EntityFrameworkCore -c CmsContext -o Models
 ```
+
+- If you want to update Entity model, you can delete Models folder then run CLI *dotnet ef dbcontext scaffold...* again
 
 4. You will see Models folder be generated with class files
 - A CmsContext class description all tables of schema and relation if have

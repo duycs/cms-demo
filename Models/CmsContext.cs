@@ -15,11 +15,12 @@ namespace cms_demo.Models
         {
         }
 
-        public virtual DbSet<AccessModifiers> AccessModifiers { get; set; }
         public virtual DbSet<FieldTypes> FieldTypes { get; set; }
         public virtual DbSet<Fields> Fields { get; set; }
+        public virtual DbSet<ObjectFileds> ObjectFileds { get; set; }
         public virtual DbSet<ObjectTypes> ObjectTypes { get; set; }
         public virtual DbSet<Objects> Objects { get; set; }
+        public virtual DbSet<Permissions> Permissions { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -32,35 +33,7 @@ namespace cms_demo.Models
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.HasAnnotation("ProductVersion", "2.2.6-servicing-10079");
-
-            modelBuilder.Entity<AccessModifiers>(entity =>
-            {
-                entity.ToTable("access_modifiers", "cms");
-
-                entity.Property(e => e.Id)
-                    .HasColumnName("id")
-                    .HasColumnType("int(11)")
-                    .ValueGeneratedNever();
-
-                entity.Property(e => e.CreatedDate).HasColumnName("created_date");
-
-                entity.Property(e => e.Description)
-                    .HasColumnName("description")
-                    .IsUnicode(false);
-
-                entity.Property(e => e.IsDeleted)
-                    .HasColumnName("is_deleted")
-                    .HasColumnType("tinyint(4)")
-                    .HasDefaultValueSql("0");
-
-                entity.Property(e => e.Name)
-                    .HasColumnName("name")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
-                entity.Property(e => e.UpdatedDate).HasColumnName("updated_date");
-            });
+            modelBuilder.HasAnnotation("ProductVersion", "2.2.4-servicing-10062");
 
             modelBuilder.Entity<FieldTypes>(entity =>
             {
@@ -100,11 +73,6 @@ namespace cms_demo.Models
                     .HasColumnType("int(11)")
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.AccessModifier)
-                    .HasColumnName("access_modifier")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.CreatedDate).HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
@@ -128,6 +96,38 @@ namespace cms_demo.Models
                     .HasColumnName("is_deleted")
                     .HasColumnType("tinyint(4)")
                     .HasDefaultValueSql("0");
+
+                entity.Property(e => e.PermissionId)
+                    .HasColumnName("permission_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.UpdatedDate).HasColumnName("updated_date");
+            });
+
+            modelBuilder.Entity<ObjectFileds>(entity =>
+            {
+                entity.ToTable("object_fileds", "cms");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+
+                entity.Property(e => e.FieldId)
+                    .HasColumnName("field_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.IsDeleted)
+                    .HasColumnName("is_deleted")
+                    .HasColumnType("tinyint(4)")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.ObjectId)
+                    .HasColumnName("object_id")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UpdatedDate).HasColumnName("updated_date");
             });
@@ -171,20 +171,11 @@ namespace cms_demo.Models
                     .IsUnicode(false)
                     .ValueGeneratedNever();
 
-                entity.Property(e => e.AccessModifier)
-                    .HasColumnName("access_modifier")
-                    .HasMaxLength(255)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.CreatedDate).HasColumnName("created_date");
 
                 entity.Property(e => e.Description)
                     .HasColumnName("description")
                     .IsUnicode(false);
-
-                entity.Property(e => e.FieldId)
-                    .HasColumnName("field_id")
-                    .HasColumnType("int(11)");
 
                 entity.Property(e => e.IsDeleted)
                     .HasColumnName("is_deleted")
@@ -199,6 +190,38 @@ namespace cms_demo.Models
                 entity.Property(e => e.ObjectTypeId)
                     .HasColumnName("object_type_id")
                     .HasColumnType("int(11)");
+
+                entity.Property(e => e.PermissionId)
+                    .HasColumnName("permission_id")
+                    .HasColumnType("int(11)");
+
+                entity.Property(e => e.UpdatedDate).HasColumnName("updated_date");
+            });
+
+            modelBuilder.Entity<Permissions>(entity =>
+            {
+                entity.ToTable("permissions", "cms");
+
+                entity.Property(e => e.Id)
+                    .HasColumnName("id")
+                    .HasColumnType("int(11)")
+                    .ValueGeneratedNever();
+
+                entity.Property(e => e.CreatedDate).HasColumnName("created_date");
+
+                entity.Property(e => e.Description)
+                    .HasColumnName("description")
+                    .IsUnicode(false);
+
+                entity.Property(e => e.IsDeleted)
+                    .HasColumnName("is_deleted")
+                    .HasColumnType("tinyint(4)")
+                    .HasDefaultValueSql("0");
+
+                entity.Property(e => e.Name)
+                    .HasColumnName("name")
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.UpdatedDate).HasColumnName("updated_date");
             });
