@@ -17,7 +17,7 @@ namespace cms_demo.Models
 
         public virtual DbSet<FieldTypes> FieldTypes { get; set; }
         public virtual DbSet<Fields> Fields { get; set; }
-        public virtual DbSet<ObjectFileds> ObjectFileds { get; set; }
+        public virtual DbSet<ObjectFields> ObjectFields { get; set; }
         public virtual DbSet<ObjectTypes> ObjectTypes { get; set; }
         public virtual DbSet<Objects> Objects { get; set; }
         public virtual DbSet<Permissions> Permissions { get; set; }
@@ -104,7 +104,7 @@ namespace cms_demo.Models
                 entity.Property(e => e.UpdatedDate).HasColumnName("updated_date");
             });
 
-            modelBuilder.Entity<ObjectFileds>(entity =>
+            modelBuilder.Entity<ObjectFields>(entity =>
             {
                 entity.ToTable("object_fileds", "cms");
 

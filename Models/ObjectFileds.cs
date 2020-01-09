@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace cms_demo.Models
 {
-    public partial class ObjectFileds
+    public partial class ObjectFields
     {
         public int Id { get; set; }
         public string ObjectId { get; set; }
