@@ -55,13 +55,13 @@ CREATE TABLE `fields` (
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Table structure for table `object_fileds`
+-- Table structure for table `object_fields`
 --
 
-DROP TABLE IF EXISTS `object_fileds`;
+DROP TABLE IF EXISTS `object_fields`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `object_fileds` (
+CREATE TABLE `object_fields` (
   `id` int(11) NOT NULL,
   `object_id` varchar(255) DEFAULT NULL,
   `field_id` int(11) DEFAULT NULL,

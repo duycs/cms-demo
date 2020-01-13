@@ -106,7 +106,7 @@ namespace cms_demo.Models
 
             modelBuilder.Entity<ObjectFields>(entity =>
             {
-                entity.ToTable("object_fileds", "cms");
+                entity.ToTable("object_fields", "cms");
 
                 entity.Property(e => e.Id)
                     .HasColumnName("id")

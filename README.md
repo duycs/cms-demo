@@ -1,6 +1,11 @@
 # cms-demo
 a simple Content management system with Database first
 
+### Criteria
+- Think about an idea then implement this
+- Understand Database first concept
+- Implement RestAPI enpoints with logic handle in Controller layer
+
 ### Keywords
 - ASP.NET Core
 - Content management system (CMS)
@@ -18,6 +23,13 @@ a simple Content management system with Database first
 #### If you a developer, you know about Object-oriented programming
 - Object-oriented programming: is a programming paradigm based on the concept of "objects", which can contain data, in the form of fields (often known as attributes or properties), and code, in the form of procedures (often known as methods).
 
+#### Object as you know
+- In the class-based object-oriented programming paradigm, object refers to a particular instance of a class, where the object can be a combination of variables, functions, and data structures.
+
+- In relational database management, an object can be a table or column, or an association between data and a database entity (such as relating a person's age to a specific person.
+
+#### Example
+- Example 1: Class Object
 Here is a class object:
 ```
 public class Person {
@@ -31,18 +43,15 @@ access_modifier object_type object_name {
     access_modifier field_type filed_name field_value;
 }
 ```
-#### Object as you know
-- In computer science, an object can be a variable, a data structure, a function, or a method, and as such, is a value in memory referenced by an identifier.
 
-- In the class-based object-oriented programming paradigm, object refers to a particular instance of a class, where the object can be a combination of variables, functions, and data structures.
-
-- In relational database management, an object can be a table or column, or an association between data and a database entity (such as relating a person's age to a specific person.
+- Example 2: Layout page
+One page layout have many fields, each field have label and value, these fileds are title, image banner, body...
 
 #### So content in the layout, I mean CMS can be thought of as is an object
 
-- From example about *Class object* above, assumption all keyword as tables is single without relation:
+- From example about *Class object* and *Layout page* above, layout page same as an object, assumption all keyword as tables is single without relation:
 ```
-access_modifier (permission table)
+access_modifier (I set name is permission table)
 object_type
 object_name
 field_type
@@ -53,7 +62,7 @@ field_value
 - After think about relation, we should have relation tables:
 object_name is one instance of many objects, so we have *objects* table with properties: object_type, permission_id, filed_id.
 filed_name is one instance of many fileds, so we have *fields* table with properties field_type, permission_id, field_value.
-One object have many fields, so we have *object_fileds* table with properties: object_id, field_id.
+One object have many fields, so we have *object_fields* table with properties: object_id, field_id.
 
 #### A sample schema for this idea
 - You can see *cms.sql* at this project folder, you use this file to generate your local database.
@@ -110,16 +119,14 @@ dotnet ef dbcontext scaffold [ConnectionString] MySql.Data.EntityFrameworkCore -
 
 - At the folder, open Command/Terminal then run this command to create a models:
 ```
-dotnet ef dbcontext scaffold "Server=mysql-6037-0.cloudclusters.net;port=10001;Database=cms;user=admin;password=abc@1234;CharSet=utf8;" MySql.Data.EntityFrameworkCore -c CmsContext -o Models
+dotnet ef dbcontext scaffold "Server=mysql-6037-0.cloudclusters.net;port=10001;Database=cms;user=admin;password=abc@1234;CharSet=utf8;" MySql.Data.EntityFrameworkCore -c CmsContext -o Models -f
 ```
-
-- If you want to update Entity model, you can delete Models folder then run CLI *dotnet ef dbcontext scaffold...* again
 
 4. You will see Models folder be generated with class files
 - A CmsContext class description all tables of schema and relation if have
 - Classes corresponding to tables in the database schema
 
-5. Next tutorial, we will add some layer and code to use this CmsContext to working with data
+5. We will add some layer and code to use this CmsContext to working with data
 
 ### You can fork/clone this demo to run at your local
 1. foke/clone this project
@@ -127,6 +134,25 @@ dotnet ef dbcontext scaffold "Server=mysql-6037-0.cloudclusters.net;port=10001;D
 ```
 dotnet run
 ```
+3. Go to `http://localhost:5000` to view swagger enpoint, have CRUD of some objects:
+- Objects
+- ObjectFields
+
+4. You can review code at Controller classes and attention to:
+- Routing attribute:  example `[Route("api/[controller]")]` and `[HttpGet("{id}")]` is meaning router to `/api/object-name/id`
+- Method action: example `HttpGet`, `HttpPost`, `HttpPut` or `HttpDelete` with logic get, create, update or delete a record.
+- Status code examples:
+`BadRequest`: client sent wrong request,\
+`NotFound`: not found object after query,\
+`NoContent`: no content if want to return list after query,\
+`Ok`: excute anything which logic successful, simple is find and return object existing.\
+- Logic query use Context database and Linq syntax.
+
+### We have many enpoint don't implement in the controller layer. Can you finish them?
+- Fields
+- FieldType
+- ObjectType
+- Permission
 
 ---
 ## Referecnces:

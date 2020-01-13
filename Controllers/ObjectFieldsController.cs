@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Dynamic;
 using System.Linq;
 using System.Threading.Tasks;
 using cms_demo.Models;
@@ -20,7 +21,7 @@ namespace cms_demo.Controllers
         [HttpGet]
         public ActionResult Get()
         {
-            var objectFieldsDto = new List<ObjectFieldDto>();
+            var objectFieldsDto = new List<object>();
 
             var objects = context.Objects.Where(w => w.IsDeleted == 0).ToList();
 
@@ -34,17 +35,20 @@ namespace cms_demo.Controllers
             {
                 var objectFields = context.ObjectFields.Where(w => w.ObjectId == obj.Id).ToList();
 
-                var fields = new List<Fields>();
+                var fieldsDto= new List<dynamic>();
                 foreach (var objectField in objectFields)
                 {
                     var field = context.Fields.Where(w => w.Id == objectField.FieldId).FirstOrDefault();
-                    fields.Add(field);
+                    var fieldDto = GetFieldDto(field);
+                    fieldsDto.Add(fieldDto);
                 }
 
-                var objectFieldDto = new ObjectFieldDto
+                var objDto = GetObjectDto(obj);
+
+                var objectFieldDto = new
                 {
-                    Object = obj,
-                    Fields = fields
+                    Object = objDto,
+                    Fields = fieldsDto
                 };
 
                 objectFieldsDto.Add(objectFieldDto);
@@ -72,7 +76,7 @@ namespace cms_demo.Controllers
                 var field = context.Fields.Where(w => w.Id == objectField.FieldId).FirstOrDefault();
                 fields.Add(field);
             }
-            var objectFieldDto = new ObjectFieldDto
+            var objectFieldDto = new
             {
                 Object = obj,
                 Fields = fields
@@ -148,15 +152,68 @@ namespace cms_demo.Controllers
             return NoContent();
         }
 
+        // Private method mapping object, we want to get child object data by id of foreign key with parent object
 
-
-        // Dto classes
-        // Dto is Data transfer object to return response
-
-        public class ObjectFieldDto
-        {
-            public Objects Object { get; set; }
-            public List<Fields> Fields { get; set; }
+        private dynamic GetObjectDto(Objects obj){
+            dynamic objDto = new ExpandoObject();
+            objDto.Id = obj.Id;
+            objDto.name = obj.Name;
+            objDto.objectType = GetObjectTypeById((int)obj.ObjectTypeId);
+            objDto.permission = GetPermissionById((int)obj.PermissionId);
+            objDto.description = obj.Description;
+            objDto.updatedDate = obj.UpdatedDate;
+            objDto.createdDate = obj.CreatedDate;
+            return objDto;
         }
+
+        private dynamic GetFieldDto(Fields field){
+            dynamic fieldDto = new ExpandoObject();
+            fieldDto.Id = field.Id;
+            fieldDto.fieldName = field.FieldName;
+            fieldDto.permission = GetPermissionById((int)field.PermissionId);
+            fieldDto.fieldType = GetFieldTypeById((int)field.FieldTypeId);
+            fieldDto.fieldValue = field.FieldValue;
+            fieldDto.description = field.Description;
+            fieldDto.createdDate = field.CreatedDate;
+
+            return fieldDto;
+        }
+
+        private dynamic GetPermissionById(int id){
+            var permisions = context.Permissions.Where(w => w.IsDeleted == 0).ToList();
+            var result = permisions.Where(w=>w.Id == id).Select(
+                    s => new {
+                        s.Id,
+                        s.Name,
+                        s.Description
+                    }
+                ).FirstOrDefault();
+            return result;
+        }
+
+        private dynamic GetObjectTypeById(int id){
+            var objectTypes = context.ObjectTypes.Where(w => w.IsDeleted == 0).ToList();
+            var result = objectTypes.Where(w=>w.Id == id).Select(
+                    s => new {
+                        s.Id,
+                        s.Name,
+                        s.Description
+                    }
+                ).FirstOrDefault();
+            return result;
+        }
+
+        private dynamic GetFieldTypeById(int id){
+            var fieldTypes = context.FieldTypes.Where(w => w.IsDeleted == 0).ToList();
+            var result = fieldTypes.Where(w=>w.Id == id).Select(
+                    s => new {
+                        s.Id,
+                        s.Name,
+                        s.Description
+                    }
+                ).FirstOrDefault();
+            return result;
+        }
+
     }
 }
