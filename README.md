@@ -1,4 +1,4 @@
-# cms-demo
+# Demo CMS
 a simple Content management system with Database first
 
 ### Criteria
